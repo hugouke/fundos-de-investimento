@@ -15,15 +15,57 @@ function App() {
       </div>
       <div className="grid-container">
         <Grid className="display">
-          <Cell small={12} medium={10}>
+          <Cell small={12} medium={9}>
             <div className="card">
-              <input placeholder="Busca fundo por nome" />
+              <div className="busca input-group">
+                <input placeholder="Buscar fundo por nome" />
+                <i class="mdi mdi-magnify float-right"></i>
+              </div>
+              <div className="filters">
+                <input
+                  type="range"
+                  name="minimum-application-value"
+                  min="0"
+                  max="16"
+                  step="1"
+                ></input>
+              </div>
             </div>
           </Cell>
-          <Cell small={12} medium={2}>
+          <Cell small={12} medium={3}>
             <div className="card">
-              <input type="checkbox" className="checkboxAzul" />
-              RENDA FIXA
+              <div className="card-title">
+                <div className="checkbox">
+                  <input type="checkbox" name="renda-fixa-all" />
+                  <label>RENDA FIXA</label>
+                </div>
+              </div>
+              <div class="card-content">
+                <div className="checkbox">
+                  <input type="checkbox" name="indexado-soberano" />
+                  <label>Indexado Soberano</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" name="renda-fixa" />
+                  <label>Renda Fixa</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" name="renda-fixa" />
+                  <label>Renda Fixa Crédito Privado</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" name="renda-fixa" />
+                  <label>Crédito Privado High Yield</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" name="renda-fixa" />
+                  <label>Renda Fixa Inflação Soberano</label>
+                </div>
+                <div className="checkbox">
+                  <input type="checkbox" name="renda-fixa" />
+                  <label>Inflação Crédito Privado</label>
+                </div>
+              </div>
             </div>
           </Cell>
         </Grid>
