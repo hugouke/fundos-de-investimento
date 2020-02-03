@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700|Roboto:300,400,400i,500,500i,700,700i,900,900i");
+@import url("https://cdn.materialdesignicons.com/1.6.50/css/materialdesignicons.min.css");
+.body {
+  font-family: "Roboto";
+  background-color: #f7f8fa;
+}
+.header {
+  text-align: center;
+  padding: 90px 0 60px;
+  color: #fff;
+  font-size: 20px;
+}
+.header h1 {
+  font-family: "Roboto Slab";
+}
+
+.card {
+  box-shadow: 6px 6px 25px 0 rgba(97, 120, 146, 0.12);
+  background-color: #fff;
+  border-radius: 3px 3px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.checkboxAzul::before {
+  color: #119c9f;
+  content: "\F132";
+  font: 16px/1 "Material Design Icons";
+}
