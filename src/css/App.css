@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700|Roboto:300,400,400i,500,500i,700,700i,900,900i");
 @import url("https://cdn.materialdesignicons.com/1.6.50/css/materialdesignicons.min.css");
+* {
+  font-size: 14px;
+}
 .body {
   font-family: "Roboto";
   background-color: #f7f8fa;
-  font-size: 13px;
 }
 .header {
   text-align: center;
@@ -29,24 +31,40 @@
 }
 .busca i {
   cursor: pointer;
-  position: absolute;
+  float: right;
   margin: 2px -20px;
   transform: scaleX(-1);
   font-size: 24px;
   color: #444;
 }
 
-.filters input[type="range"] {
+.filters {
+  background-color: #fafafa;
+}
+.filters .cell {
+  padding: 25px;
+}
+
+input[type="range"] {
   background-color: #cecfd0;
   background-image: linear-gradient(#119c9f, #119c9f);
-  background-size: 50% 100%;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   border-radius: 1px;
   cursor: pointer;
   height: 4px;
   width: 100%;
+  -webkit-appearance: none;
 }
-
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 4px solid #333;
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: pointer;
+}
 .card {
   box-shadow: 6px 6px 25px 0 rgba(97, 120, 146, 0.12);
   background-color: #fff;
@@ -57,13 +75,16 @@
 }
 .card-title {
   background-color: #fafafa;
-  text-transform: uppercase;
-  margin: -10px;
+  margin: -10px -10px 10px;
   padding: 10px;
 }
-.card-content {
-  padding: 10px 0 0;
+.card-title-dark {
+  background-color: #eee;
+  margin: -10px -10px 10px;
+  padding: 10px;
+  text-transform: uppercase;
 }
+
 .card-title .checkbox,
 .checkbox:last-child {
   border: none;
@@ -89,4 +110,104 @@
 .checkbox input[type="checkbox"]:checked + label::before {
   color: #119c9f;
   content: "\F132";
+}
+
+.funds-title {
+  margin-bottom: 0;
+}
+.funds-type {
+  color: #999;
+  font-size: 12px;
+}
+.qualified {
+  color: #639d31;
+  margin-left: 6px;
+}
+.funds {
+  margin-top: -10px;
+  margin-left: -10px;
+  display: table;
+}
+.funds .cell {
+  padding: 12px 0 12px 10px;
+  text-align: right;
+  vertical-align: middle;
+  display: table-cell;
+}
+.funds .cell:first-child {
+  text-align: left;
+}
+.funds-risk-1,
+.funds-risk-2,
+.funds-risk-3,
+.funds-risk-4,
+.funds-risk-5,
+.funds-risk-6,
+.funds-risk-7,
+.funds-risk-8,
+.funds-risk-9,
+.funds-risk-10,
+.funds-risk-11,
+.funds-risk-12 {
+  border-left: 7px solid #999;
+  margin-left: -10px;
+  display: block;
+}
+.funds-risk-1 {
+  border-left-color: #a6ecfc;
+}
+.funds-risk-2 {
+  border-left-color: #68f1dd;
+}
+.funds-risk-3 {
+  border-left-color: #91ed6e;
+}
+.funds-risk-4 {
+  border-left-color: #b0f42a;
+}
+.funds-risk-5 {
+  border-left-color: #faf00e;
+}
+.funds-risk-6 {
+  border-left-color: #ffdc00;
+}
+.funds-risk-7 {
+  border-left-color: #faf00e;
+}
+.funds-risk-8 {
+  border-left-color: #fb0;
+}
+.funds-risk-9 {
+  border-left-color: #f80;
+}
+.funds-risk-10 {
+  border-left-color: #ff5e00;
+}
+.funds-risk-11 {
+  border-left-color: #ff0600;
+}
+.funds-risk-12 {
+  border-left-color: #b51414;
+}
+.prazo-info {
+  font-size: 16px;
+}
+.apply {
+  background: #119c9f;
+  border: solid 2px transparent;
+  color: #fff;
+  font-size: 18px;
+  height: 22px;
+  width: 22px;
+  display: block;
+  position: relative;
+  text-align: center;
+  transform: rotate(101deg) translateX(-1px) translateY(-1px);
+  border-radius: 100px;
+  padding: 0 4px 0 0;
+  float: right;
+}
+.apply:hover {
+  background: #21acaf;
+  color: #fff;
 }
