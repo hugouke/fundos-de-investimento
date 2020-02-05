@@ -1,4 +1,5 @@
 import React from "react";
+import { Grid, Cell } from "react-foundation";
 import { getFunds } from "./components/fundos";
 import {
   retrievalDaysChange,
@@ -7,8 +8,8 @@ import {
   searchChange
 } from "./components/filtros";
 import "./css/App.css";
-import { Grid, Cell } from "react-foundation";
-import headerBackground from "./img/background.jpg";
+import Header from "./components/header";
+import Legenda from "./components/legenda";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,9 +36,6 @@ export default class App extends React.Component {
 
   // Render
   render() {
-    const header = {
-      backgroundImage: `url(${headerBackground})`
-    };
     // eslint-disable-next-line
     var title_macro_strategy = true,
       title_main_strategy = true,
@@ -45,10 +43,7 @@ export default class App extends React.Component {
       last_main_strategy = "";
     return (
       <div>
-        <div className="header" style={header}>
-          <h1>Lista de Fundos de Investimento</h1>
-          <p>Conheça a nossa lista de fundos</p>
-        </div>
+        <Header />
         <div className="grid-container">
           <Grid>
             <Cell small={12} medium={9}>
@@ -105,6 +100,8 @@ export default class App extends React.Component {
                           }}
                         ></div>
                       </div>
+                      <div className="min">Menor</div>
+                      <div className="max">Maior</div>
                     </Cell>
                     <Cell small={12} medium={4}>
                       <p>
@@ -309,6 +306,7 @@ export default class App extends React.Component {
               </div>
             </Cell>
           </Grid>
+          <Legenda />
         </div>
       </div>
     );
