@@ -1,10 +1,5 @@
 import React from "react";
-import API from "./components/api";
-import {
-  getFunds,
-  sortByMainStrategy,
-  sortByMacroStrategy
-} from "./components/fundos";
+import { getFunds } from "./components/fundos";
 import {
   retrievalDaysChange,
   fundRiskChange,
@@ -30,7 +25,12 @@ export default class App extends React.Component {
     };
   }
   componentDidMount() {
-    getFunds(this);
+    getFunds().then(data =>
+      this.setState({
+        funds: data,
+        all_funds: data
+      })
+    );
   }
 
   // Render
@@ -50,7 +50,7 @@ export default class App extends React.Component {
           <p>Conheça a nossa lista de fundos</p>
         </div>
         <div className="grid-container">
-          <Grid className="display">
+          <Grid>
             <Cell small={12} medium={9}>
               <div className="card">
                 <div className="busca input-group">
@@ -64,7 +64,7 @@ export default class App extends React.Component {
                   // Filtros
                 }
                 <div className="filters">
-                  <Grid className="display">
+                  <Grid>
                     <Cell small={12} medium={4}>
                       <p>
                         <strong>Aplicação mínima</strong>
