@@ -4,6 +4,12 @@ import {
   getFunds,
   sortByMainStrategy,
   sortByMacroStrategy
+} from "./components/fundos";
+import {
+  retrievalDaysChange,
+  fundRiskChange,
+  minimumApplicationChange,
+  searchChange
 } from "./components/filtros";
 import "./css/App.css";
 import { Grid, Cell } from "react-foundation";
@@ -22,103 +28,9 @@ export default class App extends React.Component {
       fund_risk: 12,
       fund_risk_line: "90%"
     };
-    this.searchChange = this.searchChange.bind(this);
-    this.minimumApplicationChange = this.minimumApplicationChange.bind(this);
-    this.retrievalDaysChange = this.retrievalDaysChange.bind(this);
-    this.fundRiskChange = this.fundRiskChange.bind(this);
   }
   componentDidMount() {
     getFunds(this);
-  }
-
-  // Busca
-  searchChange(event) {
-    const value = event.target.value.toLowerCase();
-    let funds = this.state.all_funds,
-      result = [];
-    result = funds.filter(item => {
-      return item.simple_name.toLowerCase().search(value) !== -1;
-    });
-    this.setState({ funds: result });
-  }
-
-  // Filtro: Aplicação mínima
-  minimumApplicationChange(event) {
-    const values = [
-      "100,00",
-      "200,00",
-      "400,00",
-      "500,00",
-      "800,00",
-      "1.000,00",
-      "1.500,00",
-      "2.000,00",
-      "5.000,00",
-      "7.500,00",
-      "10.000,00",
-      "12.000,00",
-      "15.000,00",
-      "17.500,00",
-      "20.000,00"
-    ];
-    const value = values[event.target.value];
-    const bg = (event.target.value / 15) * 100 + "%";
-
-    let funds = this.state.all_funds,
-      result = [];
-    result = funds.filter(item => {
-      return (
-        item.operability.minimum_initial_application_amount <=
-        parseInt(value.replace(".", ""))
-      );
-    });
-
-    this.setState({
-      minimum_application: value,
-      minimum_application_bg: bg,
-      funds: result
-    });
-  }
-
-  // Filtro: Prazo de resgate
-  retrievalDaysChange(event) {
-    const value = event.target.value;
-    const bg = (event.target.value / 30) * 100 + "%";
-
-    let funds = this.state.all_funds,
-      result = [];
-    result = funds.filter(item => {
-      return (
-        parseInt(item.operability.retrieval_quotation_days) <= parseInt(value)
-      );
-    });
-
-    this.setState({
-      retrieval_days: value,
-      retrieval_days_bg: bg,
-      funds: result
-    });
-  }
-
-  // Filtro: Perfil de risco do fundo
-  fundRiskChange(event) {
-    const sizes = [0, 0, 7, 15, 20, 30, 40, 50, 55, 65, 75, 80, 90];
-    const value = event.target.value;
-    let line = sizes[event.target.value];
-    let funds = this.state.all_funds,
-      result = [];
-    result = funds.filter(item => {
-      return (
-        parseInt(item.specification.fund_risk_profile.score_range_order) <=
-        parseInt(value)
-      );
-    });
-
-    this.setState({
-      fund_risk: value,
-      fund_risk_line: line + "%",
-      funds: result
-    });
   }
 
   // Render
@@ -144,7 +56,7 @@ export default class App extends React.Component {
                 <div className="busca input-group">
                   <input
                     placeholder="Buscar fundo por nome"
-                    onChange={this.searchChange}
+                    onChange={event => searchChange(this, event)}
                   />
                   <i className="mdi mdi-magnify float-right"></i>
                 </div>
@@ -163,7 +75,9 @@ export default class App extends React.Component {
                         min="0"
                         max="14"
                         step="1"
-                        onChange={this.minimumApplicationChange}
+                        onChange={event =>
+                          minimumApplicationChange(this, event)
+                        }
                         style={{
                           backgroundSize: this.state.minimum_application_bg
                         }}
@@ -181,7 +95,7 @@ export default class App extends React.Component {
                           min="1"
                           max="12"
                           step="1"
-                          onChange={this.fundRiskChange}
+                          onChange={event => fundRiskChange(this, event)}
                         />
                         <div className="diagonal"></div>
                         <div
@@ -202,7 +116,7 @@ export default class App extends React.Component {
                         min="0"
                         max="30"
                         step="1"
-                        onChange={this.retrievalDaysChange}
+                        onChange={event => retrievalDaysChange(this, event)}
                         style={{
                           backgroundSize: this.state.retrieval_days_bg
                         }}
