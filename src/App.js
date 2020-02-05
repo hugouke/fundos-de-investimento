@@ -7,8 +7,19 @@ import headerBackground from "./img/background.jpg";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { funds: [], all_funds: [] };
-    this.search = this.search.bind(this);
+    this.state = {
+      funds: [],
+      all_funds: [],
+      minimum_application: "20.000,00",
+      minimum_application_bg: "100%",
+      retrieval_days: 30,
+      retrieval_days_bg: "100%"
+    };
+    this.search_change = this.search_change.bind(this);
+    this.minimum_application_change = this.minimum_application_change.bind(
+      this
+    );
+    this.retrieval_days_change = this.retrieval_days_change.bind(this);
   }
   componentDidMount() {
     // Puxar lista de fundos
@@ -17,7 +28,10 @@ export default class App extends React.Component {
     ).then(res => {
       res.data.sort(sortByMainStrategy());
       res.data.sort(sortByMacroStrategy());
-      this.setState({ funds: res.data, all_funds: res.data });
+      this.setState({
+        funds: res.data,
+        all_funds: res.data
+      });
     });
     var sortByMainStrategy = function() {
       return function(x, y) {
@@ -48,8 +62,8 @@ export default class App extends React.Component {
     /**/
   }
 
-  search(event) {
-    let value = event.target.value.toLowerCase();
+  search_change(event) {
+    const value = event.target.value.toLowerCase();
     let funds = this.state.all_funds,
       result = [];
     result = funds.filter(item => {
@@ -58,14 +72,70 @@ export default class App extends React.Component {
     this.setState({ funds: result });
   }
 
+  minimum_application_change(event) {
+    const values = [
+      "100,00",
+      "200,00",
+      "400,00",
+      "500,00",
+      "800,00",
+      "1.000,00",
+      "1.500,00",
+      "2.000,00",
+      "5.000,00",
+      "7.500,00",
+      "10.000,00",
+      "12.000,00",
+      "15.000,00",
+      "17.500,00",
+      "20.000,00"
+    ];
+    const value = values[event.target.value];
+    const bg = (event.target.value / 15) * 100 + "%";
+
+    let funds = this.state.all_funds,
+      result = [];
+    result = funds.filter(item => {
+      return (
+        item.operability.minimum_initial_application_amount <=
+        parseInt(value.replace(".", ""))
+      );
+    });
+
+    this.setState({
+      minimum_application: value,
+      minimum_application_bg: bg,
+      funds: result
+    });
+  }
+  retrieval_days_change(event) {
+    const value = event.target.value;
+    const bg = (event.target.value / 30) * 100 + "%";
+
+    let funds = this.state.all_funds,
+      result = [];
+    result = funds.filter(item => {
+      return (
+        parseInt(item.operability.retrieval_quotation_days) <= parseInt(value)
+      );
+    });
+
+    this.setState({
+      retrieval_days: value,
+      retrieval_days_bg: bg,
+      funds: result
+    });
+  }
+
   render() {
     const header = {
       backgroundImage: `url(${headerBackground})`
     };
-    var title_macro_strategy = true;
-    var title_main_strategy = true;
-    var last_macro_strategy = "";
-    var last_main_strategy = "";
+    // eslint-disable-next-line
+    var title_macro_strategy = true,
+      title_main_strategy = true,
+      last_macro_strategy = "",
+      last_main_strategy = "";
     return (
       <div>
         <div className="header" style={header}>
@@ -79,7 +149,7 @@ export default class App extends React.Component {
                 <div className="busca input-group">
                   <input
                     placeholder="Buscar fundo por nome"
-                    onChange={this.search}
+                    onChange={this.search_change}
                   />
                   <i className="mdi mdi-magnify float-right"></i>
                 </div>
@@ -96,10 +166,14 @@ export default class App extends React.Component {
                         type="range"
                         name="minimum-application-value"
                         min="0"
-                        max="16"
+                        max="14"
                         step="1"
+                        onChange={this.minimum_application_change}
+                        style={{
+                          backgroundSize: this.state.minimum_application_bg
+                        }}
                       />
-                      Até R$20.000,00
+                      Até R${this.state.minimum_application}
                     </Cell>
                     <Cell small={12} medium={4}>
                       <p>
@@ -122,10 +196,14 @@ export default class App extends React.Component {
                         type="range"
                         name="minimum-application-value"
                         min="0"
-                        max="16"
+                        max="30"
                         step="1"
+                        onChange={this.retrieval_days_change}
+                        style={{
+                          backgroundSize: this.state.retrieval_days_bg
+                        }}
                       />
-                      Até 30 dias úteis
+                      Até {this.state.retrieval_days} dias úteis
                     </Cell>
                   </Grid>
                 </div>
