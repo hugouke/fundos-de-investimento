@@ -7,6 +7,11 @@
   font-family: "Roboto";
   background-color: #f7f8fa;
 }
+strong {
+  color: #444;
+}
+
+/* Header */
 .header {
   text-align: center;
   padding: 90px 0 60px;
@@ -16,58 +21,8 @@
 .header h1 {
   font-family: "Roboto Slab";
 }
-strong {
-  color: #444;
-}
 
-.busca input {
-  border: 1px solid #999;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  width: 60%;
-  padding: 8px 0;
-  font-size: 14px;
-}
-.busca input:focus {
-  outline: none;
-}
-.busca i {
-  cursor: pointer;
-  float: right;
-  margin: 2px -20px;
-  transform: scaleX(-1);
-  font-size: 24px;
-  color: #444;
-}
-
-.filters {
-  background-color: #fafafa;
-}
-.filters .cell {
-  padding: 25px;
-}
-
-input[type="range"] {
-  background-color: #cecfd0;
-  background-image: linear-gradient(#119c9f, #119c9f);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  border-radius: 1px;
-  cursor: pointer;
-  height: 4px;
-  width: 100%;
-  -webkit-appearance: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  border: 4px solid #333;
-  height: 15px;
-  width: 15px;
-  border-radius: 10px;
-  background: #ffffff;
-  cursor: pointer;
-}
+/* Cards */
 .card {
   box-shadow: 6px 6px 25px 0 rgba(97, 120, 146, 0.12);
   background-color: #fff;
@@ -88,6 +43,104 @@ input[type="range"]::-webkit-slider-thumb {
   text-transform: uppercase;
 }
 
+/* Busca & Filtros */
+.busca input {
+  border: 1px solid #999;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 60%;
+  padding: 8px 0;
+  font-size: 14px;
+}
+.busca input:focus {
+  outline: none;
+}
+.busca i {
+  cursor: pointer;
+  float: right;
+  margin: 2px -20px;
+  transform: scaleX(-1);
+  font-size: 24px;
+  color: #444;
+}
+.filters {
+  background-color: #fafafa;
+}
+.filters .cell {
+  padding: 25px;
+}
+input[type="range"] {
+  background-color: #cecfd0;
+  background-image: linear-gradient(#119c9f, #119c9f);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 1px;
+  cursor: pointer;
+  height: 4px;
+  width: 100%;
+  -webkit-appearance: none;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 4px solid #333;
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: pointer;
+}
+.fund-risk-filter {
+  position: relative;
+}
+.fund-risk-filter input[type="range"] {
+  background-image: linear-gradient(
+    to left,
+    #b51414,
+    #ff0600,
+    #ff5e00,
+    #f80,
+    #fb0,
+    #faf00e,
+    #ddf40c,
+    #b0f42a,
+    #91ed6e,
+    #68f1dd,
+    #a6ecfc
+  );
+  height: 40px;
+}
+.fund-risk-filter input[type="range"]::-webkit-slider-thumb {
+  border-radius: 0;
+  background: #fff;
+  cursor: pointer;
+  border-top: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #333;
+  margin-top: 55px;
+  z-index: 2;
+}
+.fund-risk-filter .diagonal {
+  position: absolute;
+  width: 105%;
+  height: 30px;
+  transform: rotate(-6deg);
+  background-color: #fafafa;
+  top: -16px;
+  left: -4px;
+}
+.fund-risk-filter .line {
+  position: absolute;
+  width: 90%;
+  height: 1px;
+  background-color: #999;
+  top: 50px;
+  z-index: 1;
+}
+
+/* Filtros da direita */
 .card-title .checkbox,
 .checkbox:last-child {
   border: none;
@@ -115,6 +168,7 @@ input[type="range"]::-webkit-slider-thumb {
   content: "\F132";
 }
 
+/* Lista de fundos */
 .funds-title {
   margin-bottom: 0;
 }
@@ -169,7 +223,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-left-color: #b0f42a;
 }
 .funds-risk-5 {
-  border-left-color: #faf00e;
+  border-left-color: #ddf40c;
 }
 .funds-risk-6 {
   border-left-color: #ffdc00;

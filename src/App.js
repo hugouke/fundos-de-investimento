@@ -1,5 +1,10 @@
 import React from "react";
-import API from "./api";
+import API from "./components/api";
+import {
+  getFunds,
+  sortByMainStrategy,
+  sortByMacroStrategy
+} from "./components/filtros";
 import "./css/App.css";
 import { Grid, Cell } from "react-foundation";
 import headerBackground from "./img/background.jpg";
@@ -13,56 +18,21 @@ export default class App extends React.Component {
       minimum_application: "20.000,00",
       minimum_application_bg: "100%",
       retrieval_days: 30,
-      retrieval_days_bg: "100%"
+      retrieval_days_bg: "100%",
+      fund_risk: 12,
+      fund_risk_line: "90%"
     };
-    this.search_change = this.search_change.bind(this);
-    this.minimum_application_change = this.minimum_application_change.bind(
-      this
-    );
-    this.retrieval_days_change = this.retrieval_days_change.bind(this);
+    this.searchChange = this.searchChange.bind(this);
+    this.minimumApplicationChange = this.minimumApplicationChange.bind(this);
+    this.retrievalDaysChange = this.retrievalDaysChange.bind(this);
+    this.fundRiskChange = this.fundRiskChange.bind(this);
   }
   componentDidMount() {
-    // Puxar lista de fundos
-    API.get(
-      "fund_detail_full.json?limit=10&offset=0&serializer=fund_detail_full"
-    ).then(res => {
-      res.data.sort(sortByMainStrategy());
-      res.data.sort(sortByMacroStrategy());
-      this.setState({
-        funds: res.data,
-        all_funds: res.data
-      });
-    });
-    var sortByMainStrategy = function() {
-      return function(x, y) {
-        return x.specification.fund_main_strategy.name ===
-          y.specification.fund_main_strategy.name
-          ? 0
-          : x.specification.fund_main_strategy.name >
-            y.specification.fund_main_strategy.name
-          ? 1
-          : -1;
-      };
-    };
-    var sortByMacroStrategy = function() {
-      return function(x, y) {
-        return x.specification.fund_macro_strategy.name ===
-          y.specification.fund_macro_strategy.name
-          ? 0
-          : x.specification.fund_macro_strategy.name >
-            y.specification.fund_macro_strategy.name
-          ? 1
-          : -1;
-      };
-    };
-    /*
-    API.get(
-      "fund_detail_full.json?limit=10&offset=0&serializer=fund_detail_full"
-    ).then(res => console.log(res.data));
-    /**/
+    getFunds(this);
   }
 
-  search_change(event) {
+  // Busca
+  searchChange(event) {
     const value = event.target.value.toLowerCase();
     let funds = this.state.all_funds,
       result = [];
@@ -72,7 +42,8 @@ export default class App extends React.Component {
     this.setState({ funds: result });
   }
 
-  minimum_application_change(event) {
+  // Filtro: Aplicação mínima
+  minimumApplicationChange(event) {
     const values = [
       "100,00",
       "200,00",
@@ -108,7 +79,9 @@ export default class App extends React.Component {
       funds: result
     });
   }
-  retrieval_days_change(event) {
+
+  // Filtro: Prazo de resgate
+  retrievalDaysChange(event) {
     const value = event.target.value;
     const bg = (event.target.value / 30) * 100 + "%";
 
@@ -127,6 +100,28 @@ export default class App extends React.Component {
     });
   }
 
+  // Filtro: Perfil de risco do fundo
+  fundRiskChange(event) {
+    const sizes = [0, 0, 7, 15, 20, 30, 40, 50, 55, 65, 75, 80, 90];
+    const value = event.target.value;
+    let line = sizes[event.target.value];
+    let funds = this.state.all_funds,
+      result = [];
+    result = funds.filter(item => {
+      return (
+        parseInt(item.specification.fund_risk_profile.score_range_order) <=
+        parseInt(value)
+      );
+    });
+
+    this.setState({
+      fund_risk: value,
+      fund_risk_line: line + "%",
+      funds: result
+    });
+  }
+
+  // Render
   render() {
     const header = {
       backgroundImage: `url(${headerBackground})`
@@ -149,7 +144,7 @@ export default class App extends React.Component {
                 <div className="busca input-group">
                   <input
                     placeholder="Buscar fundo por nome"
-                    onChange={this.search_change}
+                    onChange={this.searchChange}
                   />
                   <i className="mdi mdi-magnify float-right"></i>
                 </div>
@@ -168,7 +163,7 @@ export default class App extends React.Component {
                         min="0"
                         max="14"
                         step="1"
-                        onChange={this.minimum_application_change}
+                        onChange={this.minimumApplicationChange}
                         style={{
                           backgroundSize: this.state.minimum_application_bg
                         }}
@@ -179,14 +174,23 @@ export default class App extends React.Component {
                       <p>
                         <strong>Perfil de risco de fundo</strong>
                       </p>
-                      <input
-                        type="range"
-                        name="minimum-application-value"
-                        min="0"
-                        max="16"
-                        step="1"
-                      />
-                      Até R$20.000,00
+                      <div className="fund-risk-filter">
+                        <input
+                          type="range"
+                          name="fund-risk-value"
+                          min="1"
+                          max="12"
+                          step="1"
+                          onChange={this.fundRiskChange}
+                        />
+                        <div className="diagonal"></div>
+                        <div
+                          className="line"
+                          style={{
+                            width: this.state.fund_risk_line
+                          }}
+                        ></div>
+                      </div>
                     </Cell>
                     <Cell small={12} medium={4}>
                       <p>
@@ -194,11 +198,11 @@ export default class App extends React.Component {
                       </p>
                       <input
                         type="range"
-                        name="minimum-application-value"
+                        name="retrieval-days-value"
                         min="0"
                         max="30"
                         step="1"
-                        onChange={this.retrieval_days_change}
+                        onChange={this.retrievalDaysChange}
                         style={{
                           backgroundSize: this.state.retrieval_days_bg
                         }}
