@@ -15,6 +15,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       funds: [],
       all_funds: [],
       minimum_application: "20.000,00",
@@ -28,6 +29,7 @@ export default class App extends React.Component {
   componentDidMount() {
     getFunds().then(data =>
       this.setState({
+        loading:false,
         funds: data,
         all_funds: data
       })
@@ -46,7 +48,7 @@ export default class App extends React.Component {
         <Header />
         <div className="grid-container">
           <Grid>
-            <Cell small={12} medium={9}>
+            <Cell small={12} medium={12} large={9}>
               <div className="card">
                 <div className="busca input-group">
                   <input
@@ -130,28 +132,28 @@ export default class App extends React.Component {
               }
               <div className="card">
                 <Grid className="funds no-mobile">
-                  <Cell small={6} medium={4}>
+                  <Cell large={4}>
                     <strong>Fundo</strong>
                   </Cell>
-                  <Cell small={6} medium={1}>
+                  <Cell large={1}>
                     <strong>Data da cota</strong>
                   </Cell>
-                  <Cell small={6} medium={1}>
+                  <Cell large={1}>
                     <strong>Mês (%)</strong>
                   </Cell>
-                  <Cell small={6} medium={1}>
+                  <Cell large={1}>
                     <strong>2020 (%)</strong>
                   </Cell>
-                  <Cell small={6} medium={1}>
+                  <Cell large={1}>
                     <strong>12M (%)</strong>
                   </Cell>
-                  <Cell small={6} medium={2}>
+                  <Cell large={2}>
                     <strong>Aplicação mínima (R$)</strong>
                   </Cell>
-                  <Cell small={6} medium={1}>
+                  <Cell large={1}>
                     <strong>Prazo de resgate</strong>
                   </Cell>
-                  <Cell small={6} medium={1}>
+                  <Cell large={1}>
                     <strong>Aplicar</strong>
                   </Cell>
                 </Grid>
@@ -160,7 +162,7 @@ export default class App extends React.Component {
                 // Listar Fundos
                 //
 
-                this.state.funds.map(item => {
+                this.state.loading?(<div className="loading"><i className="mdi mdi-timer-sand"></i> Carregando lista de fundos...</div>):(this.state.funds.map(item => {
                   // Formatar da data
                   let quota_date = item.quota_date;
                   quota_date = quota_date.split("-");
@@ -215,7 +217,8 @@ export default class App extends React.Component {
                       <Grid className="funds" key={item.id}>
                         <Cell
                           small={12}
-                          medium={4}
+                          medium={12}
+                          large={4}
                           className={
                             "funds-risk-" +
                             item.specification.fund_risk_profile
@@ -237,40 +240,40 @@ export default class App extends React.Component {
                               item.specification.fund_class}
                           </span>
                         </Cell>
-                        <Cell small={6} medium={1} className="mobile">
+                        <Cell small={6} medium={6} large={1} className="mobile">
                           <strong>Data da cota</strong>
                         </Cell>
-                        <Cell small={6} medium={1}>
+                        <Cell small={6} medium={6} large={1}>
                           {quota_date}
                         </Cell>
-                        <Cell small={6} medium={1} className="mobile">
+                        <Cell small={6} medium={6} large={1} className="mobile">
                           <strong>Mês (%)</strong>
                         </Cell>
-                        <Cell small={6} medium={1}>
+                        <Cell small={6} medium={6} large={1}>
                           {profits_day}
                         </Cell>
-                        <Cell small={6} medium={1} className="mobile">
+                        <Cell small={6} medium={6} large={1} className="mobile">
                           <strong>2020 (%)</strong>
                         </Cell>
-                        <Cell small={6} medium={1}>
+                        <Cell small={6} medium={6} large={1}>
                           {profits_year}
                         </Cell>
-                        <Cell small={6} medium={1} className="mobile">
+                        <Cell small={6} medium={6} large={1} className="mobile">
                           <strong>12M (%)</strong>
                         </Cell>
-                        <Cell small={6} medium={1}>
+                        <Cell small={6} medium={6} large={1}>
                           {profits_m12}
                         </Cell>
-                        <Cell small={6} medium={2} className="mobile">
+                        <Cell small={6} medium={6} large={2} className="mobile">
                           <strong>Aplicação mínima (R$)</strong>
                         </Cell>
-                        <Cell small={6} medium={2}>
+                        <Cell small={6} medium={6} large={2}>
                           {item.operability.minimum_initial_application_amount}
                         </Cell>
-                        <Cell small={6} medium={1} className="mobile">
+                        <Cell small={6} medium={6} large={1} className="mobile">
                           <strong>Prazo de resgate</strong>
                         </Cell>
-                        <Cell small={6} medium={1}>
+                        <Cell small={6} medium={6} large={1}>
                           {item.operability.retrieval_quotation_days_str
                             .length < 6 ? (
                             item.operability.retrieval_quotation_days_str
@@ -278,22 +281,22 @@ export default class App extends React.Component {
                             <i className="mdi mdi-information-outline prazo-info"></i>
                           )}
                         </Cell>
-                        <Cell small={6} medium={1} className="mobile">
+                        <Cell small={6} medium={6} large={1} className="mobile">
                           <strong>Aplicar</strong>
                         </Cell>
-                        <Cell small={6} medium={1}>
+                        <Cell small={6} medium={6} large={1}>
                           <i className="apply mdi mdi-reply"></i>
                         </Cell>
                       </Grid>
                     </div>
                   );
-                })}
+                }))}
               </div>
             </Cell>
             {
               // Fitros Direita
             }
-            <Cell small={12} medium={3}>
+            <Cell small={12} medium={12} large={3} className="filters-right">
               <div className="card">
                 <div className="card-title">
                   <div className="checkbox">

@@ -180,6 +180,10 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Lista de fundos */
+.loading {
+  text-align: center;
+  padding: 20px;
+}
 .funds-title {
   margin-bottom: 0;
 }
@@ -325,12 +329,12 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Mobile */
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1024px) {
   .mobile {
     display: none !important;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .funds,
   .mobile {
     display: flex;
