@@ -1,12 +1,12 @@
 import React from "react";
 import { Grid, Cell } from "react-foundation";
-import { getFunds } from "./components/fundos";
+import { getFunds } from "./components/funds";
 import {
   retrievalDaysChange,
   fundRiskChange,
   minimumApplicationChange,
   searchChange
-} from "./components/filtros";
+} from "./components/filters";
 import "./css/App.css";
 import Header from "./components/header";
 import Legenda from "./components/legenda";
@@ -129,7 +129,7 @@ export default class App extends React.Component {
                 // Cabeçalho
               }
               <div className="card">
-                <Grid className="funds">
+                <Grid className="funds no-mobile">
                   <Cell small={6} medium={4}>
                     <strong>Fundo</strong>
                   </Cell>
@@ -214,7 +214,7 @@ export default class App extends React.Component {
                       ) : null}
                       <Grid className="funds" key={item.id}>
                         <Cell
-                          small={6}
+                          small={12}
                           medium={4}
                           className={
                             "funds-risk-" +
@@ -225,7 +225,10 @@ export default class App extends React.Component {
                           <p className="funds-title">
                             {item.simple_name}
                             {item.specification.is_qualified ? (
-                              <i className="mdi mdi-star-circle qualified"></i>
+                              <span className="qualified">
+                                <label>Fundo para investidor qualificado</label>
+                                <i className="mdi mdi-star-circle"></i>
+                              </span>
                             ) : null}
                           </p>
                           <span className="funds-type">
@@ -234,20 +237,38 @@ export default class App extends React.Component {
                               item.specification.fund_class}
                           </span>
                         </Cell>
+                        <Cell small={6} medium={1} className="mobile">
+                          <strong>Data da cota</strong>
+                        </Cell>
                         <Cell small={6} medium={1}>
                           {quota_date}
+                        </Cell>
+                        <Cell small={6} medium={1} className="mobile">
+                          <strong>Mês (%)</strong>
                         </Cell>
                         <Cell small={6} medium={1}>
                           {profits_day}
                         </Cell>
+                        <Cell small={6} medium={1} className="mobile">
+                          <strong>2020 (%)</strong>
+                        </Cell>
                         <Cell small={6} medium={1}>
                           {profits_year}
+                        </Cell>
+                        <Cell small={6} medium={1} className="mobile">
+                          <strong>12M (%)</strong>
                         </Cell>
                         <Cell small={6} medium={1}>
                           {profits_m12}
                         </Cell>
+                        <Cell small={6} medium={2} className="mobile">
+                          <strong>Aplicação mínima (R$)</strong>
+                        </Cell>
                         <Cell small={6} medium={2}>
                           {item.operability.minimum_initial_application_amount}
+                        </Cell>
+                        <Cell small={6} medium={1} className="mobile">
+                          <strong>Prazo de resgate</strong>
                         </Cell>
                         <Cell small={6} medium={1}>
                           {item.operability.retrieval_quotation_days_str
@@ -256,6 +277,9 @@ export default class App extends React.Component {
                           ) : (
                             <i className="mdi mdi-information-outline prazo-info"></i>
                           )}
+                        </Cell>
+                        <Cell small={6} medium={1} className="mobile">
+                          <strong>Aplicar</strong>
                         </Cell>
                         <Cell small={6} medium={1}>
                           <i className="apply mdi mdi-reply"></i>

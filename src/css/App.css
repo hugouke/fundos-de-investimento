@@ -134,9 +134,10 @@ input[type="range"]::-webkit-slider-thumb {
 .fund-risk-filter .line {
   position: absolute;
   width: 90%;
-  height: 1px;
-  background-color: #999;
-  top: 50px;
+  height: 10px;
+  border-bottom: 1px solid #999;
+  border-left: 1px solid #999;
+  top: 45px;
   z-index: 1;
 }
 .min,
@@ -186,9 +187,21 @@ input[type="range"]::-webkit-slider-thumb {
   color: #999;
   font-size: 12px;
 }
-.qualified {
+.qualified i {
   color: #639d31;
   margin-left: 6px;
+}
+.qualified label {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #ccc;
+  position: absolute;
+  font-size: 12px;
+  padding: 6px;
+  display: none;
+}
+.qualified:hover label {
+  display: block;
 }
 .funds {
   margin-top: -10px;
@@ -286,7 +299,7 @@ input[type="range"]::-webkit-slider-thumb {
 .legenda i {
   color: #aaa;
   font-size: 20px;
-  margin:4px 0;
+  margin: 4px 0;
 }
 .legenda i.mdi-star-circle {
   color: #639d31;
@@ -309,4 +322,44 @@ input[type="range"]::-webkit-slider-thumb {
   transform: rotate(101deg);
   border-radius: 100px;
   padding: 0 4px 0 0;
+}
+
+/* Mobile */
+@media screen and (min-width: 800px) {
+  .mobile {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 800px) {
+  .funds,
+  .mobile {
+    display: flex;
+  }
+  .funds .cell {
+    text-align: left;
+    display: table-cell;
+  }
+  .fund-risk-filter .diagonal {
+    transform: rotate(-2deg);
+  }
+  .funds-risk-1,
+  .funds-risk-2,
+  .funds-risk-3,
+  .funds-risk-4,
+  .funds-risk-5,
+  .funds-risk-6,
+  .funds-risk-7,
+  .funds-risk-8,
+  .funds-risk-9,
+  .funds-risk-10,
+  .funds-risk-11,
+  .funds-risk-12 {
+    margin-left: 0;
+  }
+  .apply {
+    float: left;
+  }
+  .no-mobile {
+    display: none;
+  }
 }
