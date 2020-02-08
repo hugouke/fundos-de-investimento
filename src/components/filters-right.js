@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Grid, Cell } from "react-foundation";
+import { Cell } from "react-foundation";
 
 export default class FiltersRight extends PureComponent {
   render() {

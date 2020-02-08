@@ -1,7 +1,12 @@
 import React from "react";
 import { Grid, Cell } from "react-foundation";
 import { getFunds } from "./components/funds";
-import { retrievalDaysChange, fundRiskChange, minimumApplicationChange, searchChange } from "./components/filters";
+import {
+  retrievalDaysChange,
+  fundRiskChange,
+  minimumApplicationChange,
+  searchChange
+} from "./components/filters";
 import "./css/App.css";
 import Header from "./components/header";
 import FiltersRight from "./components/filters-right";
@@ -44,7 +49,10 @@ export default class App extends React.Component {
             <Cell small={12} medium={12} large={9}>
               <div className="card">
                 <div className="busca input-group">
-                  <input placeholder="Buscar fundo por nome" onChange={event => searchChange(this, event)} />
+                  <input
+                    placeholder="Buscar fundo por nome"
+                    onChange={event => searchChange(this, event)}
+                  />
                   <i className="mdi mdi-magnify float-right"></i>
                 </div>
                 {
@@ -62,7 +70,9 @@ export default class App extends React.Component {
                         min="0"
                         max="14"
                         step="1"
-                        onChange={event => minimumApplicationChange(this, event)}
+                        onChange={event =>
+                          minimumApplicationChange(this, event)
+                        }
                         style={{
                           backgroundSize: this.state.minimum_application_bg
                         }}
@@ -74,7 +84,14 @@ export default class App extends React.Component {
                         <strong>Perfil de risco de fundo</strong>
                       </p>
                       <div className="fund-risk-filter">
-                        <input type="range" name="fund-risk-value" min="1" max="12" step="1" onChange={event => fundRiskChange(this, event)} />
+                        <input
+                          type="range"
+                          name="fund-risk-value"
+                          min="1"
+                          max="12"
+                          step="1"
+                          onChange={event => fundRiskChange(this, event)}
+                        />
                         <div className="diagonal"></div>
                         <div
                           className="line"
@@ -145,14 +162,22 @@ export default class App extends React.Component {
 
                 this.state.loading ? (
                   <div className="loading">
-                    <i className="mdi mdi-timer-sand"></i> Carregando lista de fundos...
+                    <i className="mdi mdi-timer-sand"></i> Carregando lista de
+                    fundos...
                   </div>
                 ) : (
                   this.state.funds.map(item => {
                     // Formatar da data
                     let quota_date = item.quota_date;
-                    quota_date = quota_date.split("-");
-                    quota_date = quota_date[2] + "/" + quota_date[1] + "/" + quota_date[0];
+                    if (quota_date) {
+                      quota_date = quota_date.split("-");
+                      quota_date =
+                        quota_date[2] +
+                        "/" +
+                        quota_date[1] +
+                        "/" +
+                        quota_date[0];
+                    }
                     // Formatar profits
                     let profits_day = item.profitabilities.day * 100;
                     profits_day = profits_day.toFixed(2).replace(".", ",");
@@ -162,14 +187,22 @@ export default class App extends React.Component {
                     profits_m12 = profits_m12.toFixed(2).replace(".", ",");
                     //
 
-                    if (item.specification.fund_macro_strategy.name !== this.last_macro_strategy) {
-                      this.last_macro_strategy = item.specification.fund_macro_strategy.name;
+                    if (
+                      item.specification.fund_macro_strategy.name !==
+                      this.last_macro_strategy
+                    ) {
+                      this.last_macro_strategy =
+                        item.specification.fund_macro_strategy.name;
                       this.title_macro_strategy = true;
                     } else {
                       this.title_macro_strategy = false;
                     }
-                    if (item.specification.fund_main_strategy.name !== this.last_main_strategy) {
-                      this.last_main_strategy = item.specification.fund_main_strategy.name;
+                    if (
+                      item.specification.fund_main_strategy.name !==
+                      this.last_main_strategy
+                    ) {
+                      this.last_main_strategy =
+                        item.specification.fund_main_strategy.name;
                       this.title_main_strategy = true;
                     } else {
                       this.title_main_strategy = false;
@@ -179,64 +212,126 @@ export default class App extends React.Component {
                       <div key={item.id}>
                         {this.title_macro_strategy ? (
                           <div className="card-title-dark">
-                            <strong>{item.specification.fund_macro_strategy.name}</strong>
+                            <strong>
+                              {item.specification.fund_macro_strategy.name}
+                            </strong>
                           </div>
                         ) : null}
                         {this.title_main_strategy ? (
                           <div className="card-title">
-                            <strong>{item.specification.fund_main_strategy.name}</strong>
+                            <strong>
+                              {item.specification.fund_main_strategy.name}
+                            </strong>
                           </div>
                         ) : null}
                         <Grid className="funds" key={item.id}>
-                          <Cell small={12} medium={12} large={4} className={"funds-risk-" + item.specification.fund_risk_profile.score_range_order}>
+                          <Cell
+                            small={12}
+                            medium={12}
+                            large={4}
+                            className={
+                              "funds-risk-" +
+                              item.specification.fund_risk_profile
+                                .score_range_order
+                            }
+                          >
                             <p className="funds-title">
                               {item.simple_name}
                               {item.specification.is_qualified ? (
                                 <span className="qualified">
-                                  <label>Fundo para investidor qualificado</label>
+                                  <label>
+                                    Fundo para investidor qualificado
+                                  </label>
                                   <i className="mdi mdi-star-circle"></i>
                                 </span>
                               ) : null}
                             </p>
-                            <span className="funds-type">{item.specification.fund_type + " | " + item.specification.fund_class}</span>
+                            <span className="funds-type">
+                              {item.specification.fund_type +
+                                " | " +
+                                item.specification.fund_class}
+                            </span>
                           </Cell>
-                          <Cell small={6} medium={6} large={1} className="mobile">
+                          <Cell
+                            small={6}
+                            medium={6}
+                            large={1}
+                            className="mobile"
+                          >
                             <strong>Data da cota</strong>
                           </Cell>
                           <Cell small={6} medium={6} large={1}>
                             {quota_date}
                           </Cell>
-                          <Cell small={6} medium={6} large={1} className="mobile">
+                          <Cell
+                            small={6}
+                            medium={6}
+                            large={1}
+                            className="mobile"
+                          >
                             <strong>Mês (%)</strong>
                           </Cell>
                           <Cell small={6} medium={6} large={1}>
                             {profits_day}
                           </Cell>
-                          <Cell small={6} medium={6} large={1} className="mobile">
+                          <Cell
+                            small={6}
+                            medium={6}
+                            large={1}
+                            className="mobile"
+                          >
                             <strong>2020 (%)</strong>
                           </Cell>
                           <Cell small={6} medium={6} large={1}>
                             {profits_year}
                           </Cell>
-                          <Cell small={6} medium={6} large={1} className="mobile">
+                          <Cell
+                            small={6}
+                            medium={6}
+                            large={1}
+                            className="mobile"
+                          >
                             <strong>12M (%)</strong>
                           </Cell>
                           <Cell small={6} medium={6} large={1}>
                             {profits_m12}
                           </Cell>
-                          <Cell small={6} medium={6} large={2} className="mobile">
+                          <Cell
+                            small={6}
+                            medium={6}
+                            large={2}
+                            className="mobile"
+                          >
                             <strong>Aplicação mínima (R$)</strong>
                           </Cell>
                           <Cell small={6} medium={6} large={2}>
-                            {item.operability.minimum_initial_application_amount}
+                            {
+                              item.operability
+                                .minimum_initial_application_amount
+                            }
                           </Cell>
-                          <Cell small={6} medium={6} large={1} className="mobile">
+                          <Cell
+                            small={6}
+                            medium={6}
+                            large={1}
+                            className="mobile"
+                          >
                             <strong>Prazo de resgate</strong>
                           </Cell>
                           <Cell small={6} medium={6} large={1}>
-                            {item.operability.retrieval_quotation_days_str.length < 6 ? item.operability.retrieval_quotation_days_str : <i className="mdi mdi-information-outline prazo-info"></i>}
+                            {item.operability.retrieval_quotation_days_str
+                              .length < 6 ? (
+                              item.operability.retrieval_quotation_days_str
+                            ) : (
+                              <i className="mdi mdi-information-outline prazo-info"></i>
+                            )}
                           </Cell>
-                          <Cell small={6} medium={6} large={1} className="mobile">
+                          <Cell
+                            small={6}
+                            medium={6}
+                            large={1}
+                            className="mobile"
+                          >
                             <strong>Aplicar</strong>
                           </Cell>
                           <Cell small={6} medium={6} large={1}>
